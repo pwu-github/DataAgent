@@ -71,6 +71,7 @@ public class OpenTelemetryConfig {
 		OtlpHttpSpanExporter spanExporter = OtlpHttpSpanExporter.builder()
 			.setEndpoint(host + "/api/public/otel/v1/traces")
 			.addHeader("Authorization", "Basic " + encodedAuth)
+			.addHeader("x-langfuse-ingestion-version", "4")
 			.setTimeout(10, TimeUnit.SECONDS)
 			.build();
 

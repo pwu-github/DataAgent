@@ -25,7 +25,19 @@ spring:
       encoding: utf-8
   ai:
     vectorstore:
-      type: simple
+      type: milvus
+      milvus:
+        client:
+          host: "localhost"
+          port: 19530
+          username: "root"  # 默认没有开启账号验证,可不填
+          password: "milvus"
+        databaseName: "data_agent_db"
+#        collectionName: "data_agent_documents"
+        embeddingDimension: 1024
+        indexType: IVF_FLAT
+        metricType: COSINE
+        initialize-schema: true  # 开启后，会在指定的数据库下初始化一个默认集合集合vector_store
     alibaba:
       data-agent:
         vector-store:
@@ -55,10 +67,10 @@ spring:
         max-sql-retry-count: 10
         # Langfuse 可观测性配置
         langfuse:
-          enabled: ${LANGFUSE_ENABLED:false}
-          host: ${LANGFUSE_HOST:}
-          public-key: ${LANGFUSE_PUBLIC_KEY:}
-          secret-key: ${LANGFUSE_SECRET_KEY:}
+          enabled: true
+          host: "http://localhost:3000"
+          public-key: "pk-lf-69fc0ddb-7856-4eab-8944-f5e5b0d4d1b0"
+          secret-key: "sk-lf-52be951f-e188-48c1-bcba-d5d7f2a83d37"
   webflux:
     multipart:
       max-file-size: 10MB
